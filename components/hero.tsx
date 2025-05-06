@@ -23,11 +23,11 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           className="max-w-4xl"
         >
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight whitespace-nowrap md:whitespace-normal">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight text-left whitespace-nowrap md:whitespace-normal">
             Your next deals, powered by PwC Korea.
           </h1>
 
-          <h2 className="text-xl md:text-2xl font-light text-white mb-12 max-w-3xl">
+          <h2 className="text-xl md:text-2xl font-light text-white mb-12 max-w-3xl text-left">
             Navigate your M&A opportunities with proven expertise and a network you can highly trust.
           </h2>
 

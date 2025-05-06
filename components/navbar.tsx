@@ -82,7 +82,7 @@ export default function Navbar() {
                 shouldBeDark ? "border-gray-300" : "border-white/30",
               )}
             >
-              <span className={cn("text-xl font-bold", shouldBeDark ? "text-gray-900" : "text-white")}>
+              <span className={cn("text-xl font-bold", shouldBeDark ? "text-[#F4511E]" : "text-white")}>
                 M&A Platform
               </span>
               <span className={cn("text-xs", shouldBeDark ? "text-gray-500" : "text-white/70")}>삼일회계법인</span>

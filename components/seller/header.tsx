@@ -57,8 +57,8 @@ export function SellerHeader() {
                 <img src="/professional-headshot.png" alt="Profile" className="h-full w-full object-cover" />
               </div>
               <div className="hidden md:block text-left">
-                <p className="text-sm font-medium">김판매</p>
-                <p className="text-xs text-gray-500">판매자</p>
+                <p className="text-sm font-medium">김재동</p>
+                <p className="text-xs text-gray-500">매도자</p>
               </div>
               <ChevronDown className="h-4 w-4 text-gray-500" />
             </button>

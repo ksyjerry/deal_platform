@@ -296,16 +296,16 @@ export default function DashboardPage() {
                     className="h-full w-full rounded-full object-cover"
                   />
                 </div>
-                <h3 className="text-lg font-bold">김전문 매니저</h3>
-                <Badge className="mt-1 mb-3">IT / 소프트웨어 전문</Badge>
+                <h3 className="text-lg font-bold">김재동 파트너</h3>
+                <Badge className="mt-1 mb-3">반도체/IT 전문</Badge>
                 <div className="space-y-2 w-full">
                   <p className="text-sm flex items-center justify-center">
                     <Mail className="h-4 w-4 mr-2 text-gray-500" />
-                    manager@pwc.com
+                    jae-dong.kim@pwc.com
                   </p>
                   <p className="text-sm flex items-center justify-center">
                     <Phone className="h-4 w-4 mr-2 text-gray-500" />
-                    010-1234-5678
+                    010-9061-9759
                   </p>
                 </div>
               </div>

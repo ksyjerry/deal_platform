@@ -99,7 +99,7 @@ export function SellerSidebar() {
           {!collapsed && (
             <div className="ml-2 flex flex-col">
               <span className="text-sm font-bold text-gray-900">M&A Platform</span>
-              <span className="text-xs text-gray-500">투자자 판매자</span>
+              <span className="text-xs text-gray-500">매도자 페이지</span>
             </div>
           )}
         </Link>

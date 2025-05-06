@@ -1,14 +1,21 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Shield, Bell, BarChart4, ListFilter, Calendar, Link } from "lucide-react"
+import { motion } from "framer-motion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Shield,
+  Bell,
+  BarChart4,
+  ListFilter,
+  Calendar,
+  Link,
+} from "lucide-react";
 
 export default function ServiceFeatures() {
   const fadeIn = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0 },
-  }
+  };
 
   const staggerContainer = {
     hidden: {},
@@ -18,7 +25,7 @@ export default function ServiceFeatures() {
         delayChildren: 0.3,
       },
     },
-  }
+  };
 
   const cardAnimation = {
     hidden: { opacity: 0, y: 70, scale: 0.95 },
@@ -34,15 +41,17 @@ export default function ServiceFeatures() {
     },
     hover: {
       y: -15,
-      boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      boxShadow:
+        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
       transition: { type: "spring", stiffness: 400, damping: 10 },
     },
-  }
+  };
 
   const sellerFeatures = [
     {
       title: "안전한 매물 비공개 등록",
-      description: "기업 정보를 100% 비공개로 등록하고 관리할 수 있는 안전한 시스템",
+      description:
+        "기업 정보를 100% 비공개로 등록하고 관리할 수 있는 안전한 시스템",
       icon: <Shield className="h-6 w-6 text-[#F4511E]" />,
     },
     {
@@ -55,7 +64,7 @@ export default function ServiceFeatures() {
       description: "삼일회계법인 전문가의 객관적인 기업가치 평가 지원",
       icon: <BarChart4 className="h-6 w-6 text-[#F4511E]" />,
     },
-  ]
+  ];
 
   const investorFeatures = [
     {
@@ -73,7 +82,7 @@ export default function ServiceFeatures() {
       description: "철저한 비밀유지 계약(NDA) 하에 안전한 딜 상담 진행",
       icon: <Link className="h-6 w-6 text-[#F4511E]" />,
     },
-  ]
+  ];
 
   return (
     <section id="service-features" className="py-24 bg-gray-50">
@@ -100,8 +109,9 @@ export default function ServiceFeatures() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-xl text-gray-600 max-w-3xl mb-8"
             >
-              매도자와 투자자 모두를 위한 맞춤형 서비스를 제공합니다. 삼일회계법인의 M&A 플랫폼은 세계적인 수준의 기술과
-              전문성을 결합하여 가장 효율적인 딜 매칭을 지원합니다.
+              매도자와 투자자 모두를 위한 맞춤형 서비스를 제공합니다.
+              삼일회계법인의 M&A 플랫폼은 세계적인 수준의 기술과 전문성을
+              결합하여 가장 효율적인 딜 매칭을 지원합니다.
             </motion.p>
 
             <motion.div
@@ -121,7 +131,8 @@ export default function ServiceFeatures() {
                 </motion.div>
               </div>
               <p className="text-gray-700 font-medium">
-                삼일회계법인의 M&A 플랫폼은 업계 최고 수준의 보안과 검증 시스템을 갖추고 있습니다.
+                삼일회계법인의 M&A 플랫폼은 업계 최고 수준의 보안과 검증
+                시스템을 갖추고 있습니다.
               </p>
             </motion.div>
           </motion.div>
@@ -138,7 +149,7 @@ export default function ServiceFeatures() {
             className="rounded-lg overflow-hidden shadow-md relative h-[400px]"
           >
             <img
-              src="/placeholder.svg?key=u8m70"
+              src="/ServiceFunction.png"
               alt="PwC professionals analyzing business data"
               className="w-full h-full object-cover"
             />
@@ -149,8 +160,13 @@ export default function ServiceFeatures() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.5 }}
             >
-              <p className="text-xl font-bold">최첨단 기술과 전문 인력의 만남</p>
-              <p className="text-sm opacity-90">삼일회계법인 전문가와 AI 기술의 협업으로 최적의 딜 매칭을 제공합니다</p>
+              <p className="text-xl font-bold">
+                최첨단 기술과 전문 인력의 만남
+              </p>
+              <p className="text-sm opacity-90">
+                삼일회계법인 전문가와 AI 기술의 협업으로 최적의 딜 매칭을
+                제공합니다
+              </p>
             </motion.div>
           </motion.div>
         </div>
@@ -202,12 +218,18 @@ export default function ServiceFeatures() {
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      transition={{ delay: 0.5 + index * 0.1, duration: 0.3, type: "spring" }}
+                      transition={{
+                        delay: 0.5 + index * 0.1,
+                        duration: 0.3,
+                        type: "spring",
+                      }}
                     >
                       {feature.icon}
                     </motion.div>
                   </div>
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900">{feature.title}</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                    {feature.title}
+                  </h3>
                   <p className="text-gray-600">{feature.description}</p>
                 </motion.div>
               ))}
@@ -233,12 +255,18 @@ export default function ServiceFeatures() {
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      transition={{ delay: 0.5 + index * 0.1, duration: 0.3, type: "spring" }}
+                      transition={{
+                        delay: 0.5 + index * 0.1,
+                        duration: 0.3,
+                        type: "spring",
+                      }}
                     >
                       {feature.icon}
                     </motion.div>
                   </div>
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900">{feature.title}</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                    {feature.title}
+                  </h3>
                   <p className="text-gray-600">{feature.description}</p>
                 </motion.div>
               ))}
@@ -247,5 +275,5 @@ export default function ServiceFeatures() {
         </Tabs>
       </div>
     </section>
-  )
+  );
 }

@@ -1,46 +1,56 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Shield, CheckCircle, Users, BarChart3, Award, ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion";
+import {
+  Shield,
+  CheckCircle,
+  Users,
+  BarChart3,
+  Award,
+  ArrowRight,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function PlatformIntro() {
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
-  }
+  };
 
   const slideIn = {
     hidden: { opacity: 0, x: -30 },
     visible: { opacity: 1, x: 0 },
-  }
+  };
 
   const features = [
     {
       title: "검증된 매물",
-      description: "삼일회계법인의 딜 어드바이저들이 선별한 고품질 매물로 시간 낭비 없는 투자 기회",
+      description:
+        "삼일회계법인의 딜 어드바이저들이 선별한 고품질 매물로 시간 낭비 없는 투자 기회",
       icon: <Shield className="h-6 w-6 text-[#F4511E]" />,
       stats: "100% 전문가 검증",
     },
     {
       title: "엄격한 심사",
-      description: "엄격한 심사를 거친 투자자/매도자 등록 시스템으로 신뢰할 수 있는 거래 파트너 확보",
+      description:
+        "엄격한 심사를 거친 투자자/매도자 등록 시스템으로 신뢰할 수 있는 거래 파트너 확보",
       icon: <CheckCircle className="h-6 w-6 text-[#F4511E]" />,
       stats: "3단계 검증 프로세스",
     },
     {
       title: "전문가 지원",
-      description: "법률·세무·회계 전문가가 딜 전 과정을 지원하여 안전하고 효율적인 거래 진행",
+      description:
+        "법률·세무·회계 전문가가 딜 전 과정을 지원하여 안전하고 효율적인 거래 진행",
       icon: <Users className="h-6 w-6 text-[#F4511E]" />,
       stats: "50+ 전담 전문가",
     },
-  ]
+  ];
 
   const statistics = [
     { value: "157+", label: "글로벌 네트워크 국가" },
     { value: "94%", label: "딜 성사율" },
     { value: "30+", label: "M&A 전문 파트너" },
-  ]
+  ];
 
   return (
     <section id="platform-intro" className="py-24 bg-white">
@@ -55,11 +65,12 @@ export default function PlatformIntro() {
             className="lg:col-span-6"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gray-900">
-              M&A, 이제는 정보가 아닌 <span className="text-[#F4511E]">신뢰의 싸움</span>입니다
+              M&A, 이제는 정보가 아닌{" "}
+              <span className="text-[#F4511E]">신뢰의 싸움</span>입니다
             </h2>
             <p className="text-xl text-gray-600 mb-8">
-              삼일회계법인의 M&A 플랫폼에서 검증된 매물과 투자자를 만나보세요. 국내 최고의 전문가 네트워크와 함께
-              성공적인 딜을 완성하세요.
+              삼일회계법인의 M&A 플랫폼에서 검증된 매물과 투자자를 만나보세요.
+              국내 최고의 전문가 네트워크와 함께 성공적인 딜을 완성하세요.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -79,8 +90,9 @@ export default function PlatformIntro() {
                 <Award className="h-5 w-5 text-[#F4511E]" />
               </div>
               <p className="text-gray-700">
-                <span className="font-bold">삼일회계법인</span>는 국내 M&A 자문 시장에서{" "}
-                <span className="font-bold">1위</span>를 차지하고 있습니다.
+                <span className="font-bold">삼일회계법인</span>는 국내 M&A 자문
+                시장에서 <span className="font-bold">1위</span>를 차지하고
+                있습니다.
               </p>
             </div>
           </motion.div>
@@ -96,8 +108,13 @@ export default function PlatformIntro() {
             <div className="relative z-10 bg-white p-6 rounded-lg shadow-xl">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 {statistics.map((stat, index) => (
-                  <div key={index} className="text-center p-4 bg-gray-50 rounded-md">
-                    <p className="text-3xl font-bold text-[#F4511E] mb-1">{stat.value}</p>
+                  <div
+                    key={index}
+                    className="text-center p-4 bg-gray-50 rounded-md"
+                  >
+                    <p className="text-3xl font-bold text-[#F4511E] mb-1">
+                      {stat.value}
+                    </p>
                     <p className="text-sm text-gray-600">{stat.label}</p>
                   </div>
                 ))}
@@ -105,14 +122,18 @@ export default function PlatformIntro() {
 
               <div className="relative h-[300px] rounded-lg overflow-hidden">
                 <img
-                  src="/placeholder.svg?key=u8m79"
+                  src="/business-meeting.png"
                   alt="삼일회계법인 M&A Platform Dashboard"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                 <div className="absolute bottom-0 left-0 p-6 text-white">
-                  <p className="text-xl font-bold mb-1">안전하고 효율적인 M&A 플랫폼</p>
-                  <p className="text-sm opacity-90">검증된 매물과 투자자를 연결하는 최적의 솔루션</p>
+                  <p className="text-xl font-bold mb-1">
+                    안전하고 효율적인 M&A 플랫폼
+                  </p>
+                  <p className="text-sm opacity-90">
+                    검증된 매물과 투자자를 연결하는 최적의 솔루션
+                  </p>
                 </div>
               </div>
             </div>
@@ -132,7 +153,9 @@ export default function PlatformIntro() {
             variants={fadeIn}
             className="text-center mb-12"
           >
-            <h3 className="text-3xl font-bold mb-4 text-gray-900">플랫폼의 핵심 가치</h3>
+            <h3 className="text-3xl font-bold mb-4 text-gray-900">
+              플랫폼의 핵심 가치
+            </h3>
             <div className="w-20 h-1 bg-[#F4511E] mx-auto"></div>
           </motion.div>
 
@@ -155,7 +178,9 @@ export default function PlatformIntro() {
                     {feature.stats}
                   </span>
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">{feature.title}</h3>
+                <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                  {feature.title}
+                </h3>
                 <p className="text-gray-600">{feature.description}</p>
               </motion.div>
             ))}
@@ -170,17 +195,20 @@ export default function PlatformIntro() {
           variants={fadeIn}
           className="bg-gray-50 p-8 rounded-lg border border-gray-100"
         >
-          <div className="flex items-start gap-4">
-            <div className="h-12 w-12 rounded-full bg-[#F4511E]/10 flex items-center justify-center flex-shrink-0 mt-1">
+          <div className="flex flex-col items-center text-center gap-4">
+            <div className="h-12 w-12 rounded-full bg-[#F4511E]/10 flex items-center justify-center flex-shrink-0">
               <BarChart3 className="h-6 w-6 text-[#F4511E]" />
             </div>
-            <div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">시장을 선도하는 M&A 플랫폼</h3>
+            <div className="text-center">
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                시장을 선도하는 M&A 플랫폼
+              </h3>
               <p className="text-gray-600 mb-4">
-                삼일회계법인의 M&A 플랫폼은 단순한 매칭을 넘어 거래의 전 과정을 함께하는 파트너입니다. 우리의 전문성과
-                글로벌 네트워크가 여러분의 성공적인 딜을 보장합니다.
+                삼일회계법인의 M&A 플랫폼은 단순한 매칭을 넘어 거래의 전 과정을
+                함께하는 파트너입니다. 우리의 전문성과 글로벌 네트워크가
+                여러분의 성공적인 딜을 보장합니다.
               </p>
-              <div className="flex items-center text-[#F4511E] font-medium cursor-pointer">
+              <div className="flex items-center justify-center text-[#F4511E] font-medium cursor-pointer">
                 <span>서비스 기능 자세히 보기</span>
                 <ArrowRight className="h-4 w-4 ml-2" />
               </div>
@@ -189,5 +217,5 @@ export default function PlatformIntro() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

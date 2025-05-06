@@ -103,7 +103,7 @@ export default function SellerDashboardPage() {
   return (
     <div className="p-6">
       <div className="p-6 text-center">
-        <h1 className="text-2xl font-bold mb-2">판매자 대시보드</h1>
+        <h1 className="text-2xl font-bold mb-2">매도자 대시보드</h1>
         <p className="text-gray-500 mb-8">등록 기업 및 투자자 현황을 한눈에 확인하세요.</p>
       </div>
 

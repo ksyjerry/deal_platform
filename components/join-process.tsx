@@ -99,12 +99,12 @@ export default function JoinProcess() {
             className="relative h-[400px] rounded-lg overflow-hidden"
           >
             <img
-              src="/placeholder.svg?key=u8m78"
+              src="/expert.png"
               alt="삼일회계법인 전문가들이 M&A 과정을 안내하는 모습"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-            <div className="absolute bottom-0 left-0 p-8 text-white">
+            <div className="absolute bottom-0 left-0 p-8 text-white text-left">
               <p className="text-2xl font-bold mb-2">전문가 지원</p>
               <p className="text-base mb-4">모든 단계에서 삼일회계법인의 M&A 전문가가 함께합니다</p>
             </div>
