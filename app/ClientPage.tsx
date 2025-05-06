@@ -31,7 +31,7 @@ export default function ClientPage() {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <main className="text-center mx-auto">
+      <main className="main-scroll-snap text-center mx-auto">
         <Hero />
         <PlatformIntro />
         <ServiceFeatures />

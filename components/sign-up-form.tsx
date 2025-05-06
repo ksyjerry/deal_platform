@@ -1,14 +1,23 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
-import { ArrowLeft, Mail, Lock, User, Eye, EyeOff, Building, Phone } from "lucide-react"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { useState } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  ArrowLeft,
+  Mail,
+  Lock,
+  User,
+  Eye,
+  EyeOff,
+  Building,
+  Phone,
+} from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export default function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -19,104 +28,104 @@ export default function SignUpForm() {
     company: "",
     phone: "",
     userType: "seller", // Default to seller
-  })
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreements, setAgreements] = useState({
     terms: false,
     privacy: false,
     marketing: false,
-  })
-  const [isLoading, setIsLoading] = useState(false)
-  const [errors, setErrors] = useState({})
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleAgreementChange = (name, checked) => {
     setAgreements((prev) => ({
       ...prev,
       [name]: checked,
-    }))
-  }
+    }));
+  };
 
   const validateForm = () => {
-    const newErrors = {}
+    const newErrors = {};
 
     // Email validation
     if (!formData.email) {
-      newErrors.email = "이메일을 입력해주세요."
+      newErrors.email = "이메일을 입력해주세요.";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "유효한 이메일 주소를 입력해주세요."
+      newErrors.email = "유효한 이메일 주소를 입력해주세요.";
     }
 
     // Password validation
     if (!formData.password) {
-      newErrors.password = "비밀번호를 입력해주세요."
+      newErrors.password = "비밀번호를 입력해주세요.";
     } else if (formData.password.length < 8) {
-      newErrors.password = "비밀번호는 8자 이상이어야 합니다."
+      newErrors.password = "비밀번호는 8자 이상이어야 합니다.";
     }
 
     // Confirm password validation
     if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "비밀번호가 일치하지 않습니다."
+      newErrors.confirmPassword = "비밀번호가 일치하지 않습니다.";
     }
 
     // Name validation
     if (!formData.name) {
-      newErrors.name = "이름을 입력해주세요."
+      newErrors.name = "이름을 입력해주세요.";
     }
 
     // Company validation
     if (!formData.company) {
-      newErrors.company = "회사명을 입력해주세요."
+      newErrors.company = "회사명을 입력해주세요.";
     }
 
     // Phone validation
     if (!formData.phone) {
-      newErrors.phone = "전화번호를 입력해주세요."
+      newErrors.phone = "전화번호를 입력해주세요.";
     }
 
     // Agreement validation
     if (!agreements.terms || !agreements.privacy) {
-      newErrors.agreements = "필수 약관에 동의해주세요."
+      newErrors.agreements = "필수 약관에 동의해주세요.";
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!validateForm()) {
-      return
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // Reset loading state
-    setIsLoading(false)
+    setIsLoading(false);
 
     // In a real app, you would handle registration here
-    console.log("Sign up with:", { ...formData, agreements })
-  }
+    console.log("Sign up with:", { ...formData, agreements });
+  };
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
-  }
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="bg-gray-50 flex flex-col flex-1 min-h-screen">
       {/* Header */}
       <header className="bg-white shadow-sm py-4">
         <div className="container mx-auto px-6">
@@ -128,7 +137,9 @@ export default function SignUpForm() {
                 className="h-12 w-auto"
               />
               <div className="ml-4 border-l pl-4 flex flex-col justify-center border-gray-300">
-                <span className="text-xl font-bold text-gray-900">M&A Platform</span>
+                <span className="text-xl font-bold text-gray-900">
+                  M&A Platform
+                </span>
                 <span className="text-xs text-gray-500">삼일회계법인</span>
               </div>
             </Link>
@@ -137,7 +148,7 @@ export default function SignUpForm() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <main className="flex-1 flex items-center justify-center pt-20 pb-32 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md">
           <motion.div
             initial="hidden"
@@ -167,7 +178,9 @@ export default function SignUpForm() {
                   <RadioGroup
                     defaultValue="seller"
                     className="flex space-x-4"
-                    onValueChange={(value) => setFormData((prev) => ({ ...prev, userType: value }))}
+                    onValueChange={(value) =>
+                      setFormData((prev) => ({ ...prev, userType: value }))
+                    }
                   >
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="seller" id="seller" />
@@ -196,13 +209,17 @@ export default function SignUpForm() {
                       name="email"
                       type="email"
                       placeholder="your.email@example.com"
-                      className={`pl-10 ${errors.email ? "border-red-500" : ""}`}
+                      className={`pl-10 ${
+                        errors.email ? "border-red-500" : ""
+                      }`}
                       value={formData.email}
                       onChange={handleChange}
                       required
                     />
                   </div>
-                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                  {errors.email && (
+                    <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                  )}
                 </div>
 
                 {/* Password */}
@@ -217,7 +234,9 @@ export default function SignUpForm() {
                       name="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="••••••••"
-                      className={`pl-10 ${errors.password ? "border-red-500" : ""}`}
+                      className={`pl-10 ${
+                        errors.password ? "border-red-500" : ""
+                      }`}
                       value={formData.password}
                       onChange={handleChange}
                       required
@@ -226,15 +245,25 @@ export default function SignUpForm() {
                       type="button"
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                       onClick={() => setShowPassword(!showPassword)}
-                      aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 표시"}
+                      aria-label={
+                        showPassword ? "비밀번호 숨기기" : "비밀번호 표시"
+                      }
                     >
-                      {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      {showPassword ? (
+                        <EyeOff className="h-5 w-5" />
+                      ) : (
+                        <Eye className="h-5 w-5" />
+                      )}
                     </button>
                   </div>
                   {errors.password ? (
-                    <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.password}
+                    </p>
                   ) : (
-                    <p className="text-gray-500 text-xs mt-1">8자 이상의 비밀번호를 입력해주세요.</p>
+                    <p className="text-gray-500 text-xs mt-1">
+                      8자 이상의 비밀번호를 입력해주세요.
+                    </p>
                   )}
                 </div>
 
@@ -250,7 +279,9 @@ export default function SignUpForm() {
                       name="confirmPassword"
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="••••••••"
-                      className={`pl-10 ${errors.confirmPassword ? "border-red-500" : ""}`}
+                      className={`pl-10 ${
+                        errors.confirmPassword ? "border-red-500" : ""
+                      }`}
                       value={formData.confirmPassword}
                       onChange={handleChange}
                       required
@@ -258,13 +289,27 @@ export default function SignUpForm() {
                     <button
                       type="button"
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      aria-label={showConfirmPassword ? "비밀번호 숨기기" : "비밀번호 표시"}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                      aria-label={
+                        showConfirmPassword
+                          ? "비밀번호 숨기기"
+                          : "비밀번호 표시"
+                      }
                     >
-                      {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      {showConfirmPassword ? (
+                        <EyeOff className="h-5 w-5" />
+                      ) : (
+                        <Eye className="h-5 w-5" />
+                      )}
                     </button>
                   </div>
-                  {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
+                  {errors.confirmPassword && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.confirmPassword}
+                    </p>
+                  )}
                 </div>
 
                 {/* Name */}
@@ -285,7 +330,9 @@ export default function SignUpForm() {
                       required
                     />
                   </div>
-                  {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+                  {errors.name && (
+                    <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+                  )}
                 </div>
 
                 {/* Company */}
@@ -300,13 +347,19 @@ export default function SignUpForm() {
                       name="company"
                       type="text"
                       placeholder="회사명을 입력해주세요"
-                      className={`pl-10 ${errors.company ? "border-red-500" : ""}`}
+                      className={`pl-10 ${
+                        errors.company ? "border-red-500" : ""
+                      }`}
                       value={formData.company}
                       onChange={handleChange}
                       required
                     />
                   </div>
-                  {errors.company && <p className="text-red-500 text-xs mt-1">{errors.company}</p>}
+                  {errors.company && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.company}
+                    </p>
+                  )}
                 </div>
 
                 {/* Phone */}
@@ -321,13 +374,17 @@ export default function SignUpForm() {
                       name="phone"
                       type="tel"
                       placeholder="010-1234-5678"
-                      className={`pl-10 ${errors.phone ? "border-red-500" : ""}`}
+                      className={`pl-10 ${
+                        errors.phone ? "border-red-500" : ""
+                      }`}
                       value={formData.phone}
                       onChange={handleChange}
                       required
                     />
                   </div>
-                  {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+                  {errors.phone && (
+                    <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
+                  )}
                 </div>
 
                 {/* Agreements */}
@@ -336,12 +393,20 @@ export default function SignUpForm() {
                     <Checkbox
                       id="terms"
                       checked={agreements.terms}
-                      onCheckedChange={(checked) => handleAgreementChange("terms", checked === true)}
+                      onCheckedChange={(checked) =>
+                        handleAgreementChange("terms", checked === true)
+                      }
                       className="mt-1"
                     />
-                    <Label htmlFor="terms" className="ml-2 text-sm text-gray-600">
+                    <Label
+                      htmlFor="terms"
+                      className="ml-2 text-sm text-gray-600"
+                    >
                       <span className="text-red-500 mr-1">*</span>
-                      <Link href="/terms" className="text-[#F4511E] hover:underline">
+                      <Link
+                        href="/terms"
+                        className="text-[#F4511E] hover:underline"
+                      >
                         서비스 이용약관
                       </Link>
                       에 동의합니다.
@@ -352,12 +417,20 @@ export default function SignUpForm() {
                     <Checkbox
                       id="privacy"
                       checked={agreements.privacy}
-                      onCheckedChange={(checked) => handleAgreementChange("privacy", checked === true)}
+                      onCheckedChange={(checked) =>
+                        handleAgreementChange("privacy", checked === true)
+                      }
                       className="mt-1"
                     />
-                    <Label htmlFor="privacy" className="ml-2 text-sm text-gray-600">
+                    <Label
+                      htmlFor="privacy"
+                      className="ml-2 text-sm text-gray-600"
+                    >
                       <span className="text-red-500 mr-1">*</span>
-                      <Link href="/privacy" className="text-[#F4511E] hover:underline">
+                      <Link
+                        href="/privacy"
+                        className="text-[#F4511E] hover:underline"
+                      >
                         개인정보 처리방침
                       </Link>
                       에 동의합니다.
@@ -368,15 +441,24 @@ export default function SignUpForm() {
                     <Checkbox
                       id="marketing"
                       checked={agreements.marketing}
-                      onCheckedChange={(checked) => handleAgreementChange("marketing", checked === true)}
+                      onCheckedChange={(checked) =>
+                        handleAgreementChange("marketing", checked === true)
+                      }
                       className="mt-1"
                     />
-                    <Label htmlFor="marketing" className="ml-2 text-sm text-gray-600">
+                    <Label
+                      htmlFor="marketing"
+                      className="ml-2 text-sm text-gray-600"
+                    >
                       마케팅 정보 수신에 동의합니다. (선택)
                     </Label>
                   </div>
 
-                  {errors.agreements && <p className="text-red-500 text-xs mt-1">{errors.agreements}</p>}
+                  {errors.agreements && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.agreements}
+                    </p>
+                  )}
                 </div>
 
                 <Button
@@ -395,19 +477,33 @@ export default function SignUpForm() {
                     <div className="w-full border-t border-gray-200"></div>
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-white text-gray-500">간편 회원가입</span>
+                    <span className="px-2 bg-white text-gray-500">
+                      간편 회원가입
+                    </span>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-3">
                   <Button variant="outline" className="py-6">
-                    <img src="/placeholder.svg?key=google-icon" alt="Google" className="h-5 w-5" />
+                    <img
+                      src="/placeholder.svg?key=google-icon"
+                      alt="Google"
+                      className="h-5 w-5"
+                    />
                   </Button>
                   <Button variant="outline" className="py-6">
-                    <img src="/placeholder.svg?key=apple-icon" alt="Apple" className="h-5 w-5" />
+                    <img
+                      src="/placeholder.svg?key=apple-icon"
+                      alt="Apple"
+                      className="h-5 w-5"
+                    />
                   </Button>
                   <Button variant="outline" className="py-6">
-                    <img src="/placeholder.svg?key=kakao-icon" alt="Kakao" className="h-5 w-5" />
+                    <img
+                      src="/placeholder.svg?key=kakao-icon"
+                      alt="Kakao"
+                      className="h-5 w-5"
+                    />
                   </Button>
                 </div>
               </div>
@@ -417,7 +513,10 @@ export default function SignUpForm() {
             <div className="px-6 py-4 bg-gray-50 text-center">
               <p className="text-sm text-gray-600">
                 이미 계정이 있으신가요?{" "}
-                <Link href="/signin" className="font-medium text-[#F4511E] hover:underline">
+                <Link
+                  href="/signin"
+                  className="font-medium text-[#F4511E] hover:underline"
+                >
                   로그인
                 </Link>
               </p>
@@ -427,7 +526,7 @@ export default function SignUpForm() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white py-4 border-t border-gray-200">
+      <footer className="bg-white py-4 border-t border-gray-200 fixed bottom-0 left-0 w-full">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center">
@@ -436,16 +535,27 @@ export default function SignUpForm() {
                 alt="PwC Logo"
                 className="h-8 w-auto"
               />
-              <p className="ml-4 text-sm text-gray-500">© {new Date().getFullYear()} PwC. All rights reserved.</p>
+              <p className="ml-4 text-sm text-gray-500">
+                © {new Date().getFullYear()} PwC. All rights reserved.
+              </p>
             </div>
             <div className="flex space-x-6">
-              <Link href="/privacy" className="text-sm text-gray-500 hover:text-gray-700">
+              <Link
+                href="/privacy"
+                className="text-sm text-gray-500 hover:text-gray-700"
+              >
                 개인정보 처리방침
               </Link>
-              <Link href="/terms" className="text-sm text-gray-500 hover:text-gray-700">
+              <Link
+                href="/terms"
+                className="text-sm text-gray-500 hover:text-gray-700"
+              >
                 이용약관
               </Link>
-              <Link href="/contact" className="text-sm text-gray-500 hover:text-gray-700">
+              <Link
+                href="/contact"
+                className="text-sm text-gray-500 hover:text-gray-700"
+              >
                 문의하기
               </Link>
             </div>
@@ -453,5 +563,5 @@ export default function SignUpForm() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

@@ -57,12 +57,13 @@ body {
   overflow-x: hidden;
 }
 
-main {
+/* 스크롤 스냅이 필요한 main에만 적용할 클래스 */
+.main-scroll-snap {
   height: 100vh;
   overflow-y: auto;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch; /* For better iOS scrolling */
+  -webkit-overflow-scrolling: touch;
 }
 
 section {

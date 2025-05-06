@@ -1,42 +1,42 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
-import { ArrowLeft, Mail, Lock, Eye, EyeOff } from "lucide-react"
+import { useState } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ArrowLeft, Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 export default function SignInForm() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // Reset loading state
-    setIsLoading(false)
+    setIsLoading(false);
 
     // In a real app, you would handle authentication here
-    console.log("Sign in with:", { email, password })
-  }
+    console.log("Sign in with:", { email, password });
+  };
 
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
-  }
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="bg-gray-50 flex flex-col flex-1 min-h-screen">
       {/* Header */}
       <header className="bg-white shadow-sm py-4">
         <div className="container mx-auto px-6">
@@ -48,7 +48,9 @@ export default function SignInForm() {
                 className="h-12 w-auto"
               />
               <div className="ml-4 border-l pl-4 flex flex-col justify-center border-gray-300">
-                <span className="text-xl font-bold text-gray-900">M&A Platform</span>
+                <span className="text-xl font-bold text-gray-900">
+                  M&A Platform
+                </span>
                 <span className="text-xs text-gray-500">삼일회계법인</span>
               </div>
             </Link>
@@ -57,7 +59,7 @@ export default function SignInForm() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <main className="flex-1 flex items-center justify-center pt-20 pb-32 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md">
           <motion.div
             initial="hidden"
@@ -104,7 +106,10 @@ export default function SignInForm() {
                     <Label htmlFor="password" className="text-gray-700">
                       비밀번호
                     </Label>
-                    <Link href="/forgot-password" className="text-sm text-[#F4511E] hover:underline">
+                    <Link
+                      href="/forgot-password"
+                      className="text-sm text-[#F4511E] hover:underline"
+                    >
                       비밀번호 찾기
                     </Link>
                   </div>
@@ -123,9 +128,15 @@ export default function SignInForm() {
                       type="button"
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                       onClick={() => setShowPassword(!showPassword)}
-                      aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 표시"}
+                      aria-label={
+                        showPassword ? "비밀번호 숨기기" : "비밀번호 표시"
+                      }
                     >
-                      {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      {showPassword ? (
+                        <EyeOff className="h-5 w-5" />
+                      ) : (
+                        <Eye className="h-5 w-5" />
+                      )}
                     </button>
                   </div>
                 </div>
@@ -134,9 +145,14 @@ export default function SignInForm() {
                   <Checkbox
                     id="remember-me"
                     checked={rememberMe}
-                    onCheckedChange={(checked) => setRememberMe(checked === true)}
+                    onCheckedChange={(checked) =>
+                      setRememberMe(checked === true)
+                    }
                   />
-                  <Label htmlFor="remember-me" className="ml-2 text-sm text-gray-600">
+                  <Label
+                    htmlFor="remember-me"
+                    className="ml-2 text-sm text-gray-600"
+                  >
                     30일 동안 로그인 유지
                   </Label>
                 </div>
@@ -163,13 +179,25 @@ export default function SignInForm() {
 
                 <div className="grid grid-cols-3 gap-3">
                   <Button variant="outline" className="py-6">
-                    <img src="/placeholder.svg?key=google-icon" alt="Google" className="h-5 w-5" />
+                    <img
+                      src="/placeholder.svg?key=google-icon"
+                      alt="Google"
+                      className="h-5 w-5"
+                    />
                   </Button>
                   <Button variant="outline" className="py-6">
-                    <img src="/placeholder.svg?key=apple-icon" alt="Apple" className="h-5 w-5" />
+                    <img
+                      src="/placeholder.svg?key=apple-icon"
+                      alt="Apple"
+                      className="h-5 w-5"
+                    />
                   </Button>
                   <Button variant="outline" className="py-6">
-                    <img src="/placeholder.svg?key=kakao-icon" alt="Kakao" className="h-5 w-5" />
+                    <img
+                      src="/placeholder.svg?key=kakao-icon"
+                      alt="Kakao"
+                      className="h-5 w-5"
+                    />
                   </Button>
                 </div>
               </div>
@@ -179,7 +207,10 @@ export default function SignInForm() {
             <div className="px-6 py-4 bg-gray-50 text-center">
               <p className="text-sm text-gray-600">
                 계정이 없으신가요?{" "}
-                <Link href="/signup" className="font-medium text-[#F4511E] hover:underline">
+                <Link
+                  href="/signup"
+                  className="font-medium text-[#F4511E] hover:underline"
+                >
                   회원가입
                 </Link>
               </p>
@@ -207,7 +238,7 @@ export default function SignInForm() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white py-4 border-t border-gray-200">
+      <footer className="bg-white py-4 border-t border-gray-200 fixed bottom-0 left-0 w-full">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center">
@@ -216,16 +247,27 @@ export default function SignInForm() {
                 alt="PwC Logo"
                 className="h-8 w-auto"
               />
-              <p className="ml-4 text-sm text-gray-500">© {new Date().getFullYear()} PwC. All rights reserved.</p>
+              <p className="ml-4 text-sm text-gray-500">
+                © {new Date().getFullYear()} PwC. All rights reserved.
+              </p>
             </div>
             <div className="flex space-x-6">
-              <Link href="/privacy" className="text-sm text-gray-500 hover:text-gray-700">
+              <Link
+                href="/privacy"
+                className="text-sm text-gray-500 hover:text-gray-700"
+              >
                 개인정보 처리방침
               </Link>
-              <Link href="/terms" className="text-sm text-gray-500 hover:text-gray-700">
+              <Link
+                href="/terms"
+                className="text-sm text-gray-500 hover:text-gray-700"
+              >
                 이용약관
               </Link>
-              <Link href="/contact" className="text-sm text-gray-500 hover:text-gray-700">
+              <Link
+                href="/contact"
+                className="text-sm text-gray-500 hover:text-gray-700"
+              >
                 문의하기
               </Link>
             </div>
@@ -233,5 +275,5 @@ export default function SignInForm() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
