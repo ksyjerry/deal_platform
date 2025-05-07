@@ -1,53 +1,86 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-import Link from "next/link"
+import { useState, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { createClient } from "@/utils/supabase/client";
+import { signOut } from "@/utils/auth-actions";
+import { User } from "@supabase/supabase-js";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [isHeroVisible, setIsHeroVisible] = useState(true)
+  const [isOpen, setIsOpen] = useState(false);
+  const [isHeroVisible, setIsHeroVisible] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+
+  const router = useRouter();
+
+  // Supabase client
+  const supabase = createClient();
 
   // Use ref to track the hero section
-  const heroObserverRef = useRef(null)
+  const heroObserverRef = useRef<IntersectionObserver | null>(null);
+
+  // 사용자 정보 가져오기
+  useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+
+    getUser();
+
+    // 로그인 상태 변경 감지
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user || null);
+      }
+    );
+
+    return () => {
+      authListener?.subscription.unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     // Set up intersection observer to detect when hero is visible
-    const heroSection = document.querySelector("section:first-of-type")
+    const heroSection = document.querySelector("section:first-of-type");
 
     if (heroSection) {
       const observer = new IntersectionObserver(
         ([entry]) => {
           // When hero visibility changes, update state
-          setIsHeroVisible(entry.isIntersecting)
+          setIsHeroVisible(entry.isIntersecting);
         },
         {
           threshold: 0.1, // Trigger when at least 10% of the hero is visible
           rootMargin: "-80px 0px 0px 0px", // Account for navbar height
-        },
-      )
+        }
+      );
 
-      observer.observe(heroSection)
-      heroObserverRef.current = observer
+      observer.observe(heroSection);
+      heroObserverRef.current = observer;
 
       return () => {
         if (heroObserverRef.current) {
-          observer.disconnect()
+          observer.disconnect();
         }
-      }
+      };
     }
-  }, [])
+  }, []);
 
   // Add smooth scroll function
-  const handleNavClick = (e, targetId) => {
-    e.preventDefault()
-    const targetElement = document.getElementById(targetId)
+  const handleNavClick = (e: React.MouseEvent, targetId: string) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
     if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth" })
+      targetElement.scrollIntoView({ behavior: "smooth" });
     }
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
 
   const navLinks = [
     { name: "플랫폼 소개", href: "platform-intro" },
@@ -56,16 +89,32 @@ export default function Navbar() {
     { name: "성공 사례", href: "testimonials" },
     { name: "참여 방법", href: "join-process" },
     { name: "FAQ", href: "faq" },
-  ]
+  ];
 
   // Determine if navbar should have dark text/background
-  const shouldBeDark = !isHeroVisible
+  const shouldBeDark = !isHeroVisible;
+
+  // 로그아웃 핸들러
+  const handleSignOut = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error("로그아웃 오류:", error);
+      } else {
+        router.refresh(); // 현재 페이지 새로고침
+      }
+    } catch (error) {
+      console.error("로그아웃 처리 중 예외 발생:", error);
+    }
+  };
 
   return (
     <header
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-300",
-        shouldBeDark ? "bg-white shadow-sm" : "bg-transparent",
+        shouldBeDark ? "bg-white shadow-sm" : "bg-transparent"
       )}
     >
       <div className="max-w-screen-xl mx-auto px-6 py-3">
@@ -79,13 +128,25 @@ export default function Navbar() {
             <div
               className={cn(
                 "ml-4 border-l pl-4 flex flex-col justify-center",
-                shouldBeDark ? "border-gray-300" : "border-white/30",
+                shouldBeDark ? "border-gray-300" : "border-white/30"
               )}
             >
-              <span className={cn("text-xl font-bold", shouldBeDark ? "text-[#F4511E]" : "text-white")}>
+              <span
+                className={cn(
+                  "text-xl font-bold",
+                  shouldBeDark ? "text-[#F4511E]" : "text-white"
+                )}
+              >
                 M&A Platform
               </span>
-              <span className={cn("text-xs", shouldBeDark ? "text-gray-500" : "text-white/70")}>삼일회계법인</span>
+              <span
+                className={cn(
+                  "text-xs",
+                  shouldBeDark ? "text-gray-500" : "text-white/70"
+                )}
+              >
+                삼일회계법인
+              </span>
             </div>
           </Link>
 
@@ -97,7 +158,9 @@ export default function Navbar() {
                 href={`#${link.href}`}
                 className={cn(
                   "text-sm font-medium transition-colors",
-                  shouldBeDark ? "text-gray-800 hover:text-black" : "text-white hover:text-gray-200",
+                  shouldBeDark
+                    ? "text-gray-800 hover:text-black"
+                    : "text-white hover:text-gray-200"
                 )}
                 onClick={(e) => handleNavClick(e, link.href)}
               >
@@ -106,32 +169,67 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Right side items - Sign up and Sign in buttons */}
+          {/* Right side items - Sign up and Sign in buttons or User info */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/signup">
-              <Button size="sm" className="rounded-none bg-[#F4511E] hover:bg-[#D73C11] text-white border-none">
-                회원가입
-              </Button>
-            </Link>
-            <Link href="/signin">
-              <Button
-                variant="outline"
-                size="sm"
-                className="rounded-none border-gray-300 text-gray-800 hover:bg-gray-100 bg-white"
-              >
-                로그인
-              </Button>
-            </Link>
+            {user ? (
+              <>
+                <span
+                  className={cn(
+                    "text-sm font-medium",
+                    shouldBeDark ? "text-gray-800" : "text-white"
+                  )}
+                >
+                  {user.email}
+                </span>
+                <Button
+                  onClick={handleSignOut}
+                  variant="outline"
+                  size="sm"
+                  className="rounded-none border-gray-300 text-gray-800 hover:bg-gray-100 bg-white"
+                >
+                  로그아웃
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link href="/signup">
+                  <Button
+                    size="sm"
+                    className="rounded-none bg-[#F4511E] hover:bg-[#D73C11] text-white border-none"
+                  >
+                    회원가입
+                  </Button>
+                </Link>
+                <Link href="/signin">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="rounded-none border-gray-300 text-gray-800 hover:bg-gray-100 bg-white"
+                  >
+                    로그인
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Navigation Toggle */}
           <Button
             variant="ghost"
             size="icon"
-            className={cn("md:hidden", shouldBeDark ? "text-gray-800" : "text-white")}
+            className={cn(
+              "md:hidden",
+              shouldBeDark ? "text-gray-800" : "text-white"
+            )}
             onClick={() => setIsOpen(!isOpen)}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d={isOpen ? "M18 6L6 18M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
                 stroke="currentColor"
@@ -160,24 +258,39 @@ export default function Navbar() {
                 </a>
               ))}
               <div className="pt-4 border-t border-gray-200 flex flex-col space-y-3">
-                <Link href="/signup">
-                  <Button className="w-full justify-start rounded-none bg-[#F4511E] hover:bg-[#D73C11] text-white">
-                    회원가입
-                  </Button>
-                </Link>
-                <Link href="/signin">
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start rounded-none bg-white text-gray-800 border-gray-300 hover:bg-gray-100"
-                  >
-                    로그인
-                  </Button>
-                </Link>
+                {user ? (
+                  <>
+                    <div className="text-gray-800 py-2">{user.email}</div>
+                    <Button
+                      onClick={handleSignOut}
+                      variant="outline"
+                      className="w-full justify-start rounded-none bg-white text-gray-800 border-gray-300 hover:bg-gray-100"
+                    >
+                      로그아웃
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Link href="/signup">
+                      <Button className="w-full justify-start rounded-none bg-[#F4511E] hover:bg-[#D73C11] text-white">
+                        회원가입
+                      </Button>
+                    </Link>
+                    <Link href="/signin">
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start rounded-none bg-white text-gray-800 border-gray-300 hover:bg-gray-100"
+                      >
+                        로그인
+                      </Button>
+                    </Link>
+                  </>
+                )}
               </div>
             </nav>
           </div>
         </div>
       )}
     </header>
-  )
+  );
 }

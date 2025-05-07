@@ -243,7 +243,7 @@ export default function FAQ() {
           className="mt-20"
         >
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold mb-4 text-gray-900">PwC Korea 팀에게 물어보세요</h3>
+            <h3 className="text-3xl font-bold mb-4 text-gray-900">삼일회계법인 M&A 플랫폼팀에게 물어보세요</h3>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               FAQ에서 원하는 답변을 찾지 못하셨나요? 언제든지 문의해 주시면 빠르게 답변해 드리겠습니다.
             </p>

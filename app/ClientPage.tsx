@@ -14,7 +14,7 @@ import Navbar from "@/components/navbar";
 export default function ClientPage() {
   // Add this useEffect to handle keyboard navigation
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowDown") {
         e.preventDefault();
         window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
@@ -33,14 +33,16 @@ export default function ClientPage() {
       <Navbar />
       <main className="main-scroll-snap text-center mx-auto">
         <Hero />
-        <PlatformIntro />
-        <ServiceFeatures />
-        <Differentiation />
-        <Testimonials />
-        <JoinProcess />
-        <div className="bg-gray-50">
-          <FAQ />
-          <Footer />
+        <div className="max-w-6xl mx-auto px-4">
+          <PlatformIntro />
+          <ServiceFeatures />
+          <Differentiation />
+          <Testimonials />
+          <JoinProcess />
+          <div className="bg-gray-50">
+            <FAQ />
+            <Footer />
+          </div>
         </div>
       </main>
     </div>

@@ -16,10 +16,24 @@ import {
   EyeOff,
   Building,
   Phone,
+  CheckCircle2,
 } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 export default function SignUpForm() {
+  const router = useRouter();
+  const supabase = createClient();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -38,6 +52,9 @@ export default function SignUpForm() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [serverError, setServerError] = useState("");
+  const [showEmailVerificationDialog, setShowEmailVerificationDialog] =
+    useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -108,15 +125,35 @@ export default function SignUpForm() {
     }
 
     setIsLoading(true);
+    setServerError("");
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            name: formData.name,
+            company: formData.company,
+            phone: formData.phone,
+            user_type: formData.userType,
+          },
+        },
+      });
 
-    // Reset loading state
-    setIsLoading(false);
-
-    // In a real app, you would handle registration here
-    console.log("Sign up with:", { ...formData, agreements });
+      if (error) {
+        setServerError(error.message);
+        console.error("회원가입 오류:", error);
+      } else {
+        console.log("회원가입 성공:", data);
+        setShowEmailVerificationDialog(true);
+      }
+    } catch (error) {
+      console.error("회원가입 처리 중 예외 발생:", error);
+      setServerError("회원가입 처리 중 오류가 발생했습니다.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const fadeIn = {
@@ -176,6 +213,7 @@ export default function SignUpForm() {
                 <div className="space-y-2">
                   <Label className="text-gray-700">회원 유형</Label>
                   <RadioGroup
+                    name="userType"
                     defaultValue="seller"
                     className="flex space-x-4"
                     onValueChange={(value) =>
@@ -461,6 +499,13 @@ export default function SignUpForm() {
                   )}
                 </div>
 
+                {/* 서버 에러 메시지 */}
+                {serverError && (
+                  <div className="bg-red-50 border border-red-300 text-red-600 px-4 py-3 rounded">
+                    {serverError}
+                  </div>
+                )}
+
                 <Button
                   type="submit"
                   className="w-full bg-[#F4511E] hover:bg-[#D73C11] text-white rounded-md py-6"
@@ -562,6 +607,43 @@ export default function SignUpForm() {
           </div>
         </div>
       </footer>
+
+      {/* Email Verification Dialog */}
+      <Dialog
+        open={showEmailVerificationDialog}
+        onOpenChange={setShowEmailVerificationDialog}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-center text-lg">
+              이메일 인증이 필요합니다
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              <div className="flex flex-col items-center py-4">
+                <CheckCircle2 className="h-12 w-12 text-green-500 mb-4" />
+                <p className="text-base">
+                  {formData.email}로 인증 메일이 발송되었습니다.
+                </p>
+                <p className="mt-2">
+                  이메일에 있는 링크를 클릭하여 계정 인증을 완료해주세요.
+                </p>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-center">
+            <Button
+              type="button"
+              className="bg-[#F4511E] hover:bg-[#D73C11] text-white"
+              onClick={() => {
+                setShowEmailVerificationDialog(false);
+                router.push("/");
+              }}
+            >
+              확인
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

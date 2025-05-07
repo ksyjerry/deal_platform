@@ -8,26 +8,50 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowLeft, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function SignInForm() {
+  const router = useRouter();
+  const supabase = createClient();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!email || !password) {
+      setServerError("이메일과 비밀번호를 입력해주세요.");
+      return;
+    }
+
     setIsLoading(true);
+    setServerError("");
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    // Reset loading state
-    setIsLoading(false);
-
-    // In a real app, you would handle authentication here
-    console.log("Sign in with:", { email, password });
+      if (error) {
+        setServerError(error.message);
+        console.error("로그인 오류:", error);
+      } else {
+        console.log("로그인 성공:", data);
+        router.push("/");
+      }
+    } catch (error) {
+      console.error("로그인 처리 중 예외 발생:", error);
+      setServerError("로그인 처리 중 오류가 발생했습니다.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const fadeIn = {
@@ -91,6 +115,7 @@ export default function SignInForm() {
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                     <Input
                       id="email"
+                      name="email"
                       type="email"
                       placeholder="your.email@example.com"
                       className="pl-10"
@@ -117,6 +142,7 @@ export default function SignInForm() {
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                     <Input
                       id="password"
+                      name="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="••••••••"
                       className="pl-10"
@@ -156,6 +182,13 @@ export default function SignInForm() {
                     30일 동안 로그인 유지
                   </Label>
                 </div>
+
+                {/* 서버 에러 메시지 */}
+                {serverError && (
+                  <div className="bg-red-50 border border-red-300 text-red-600 px-4 py-3 rounded">
+                    {serverError}
+                  </div>
+                )}
 
                 <Button
                   type="submit"
