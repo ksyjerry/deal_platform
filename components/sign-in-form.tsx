@@ -24,12 +24,6 @@ export default function SignInForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!email || !password) {
-      setServerError("이메일과 비밀번호를 입력해주세요.");
-      return;
-    }
-
     setIsLoading(true);
     setServerError("");
 
@@ -45,10 +39,37 @@ export default function SignInForm() {
       } else {
         console.log("로그인 성공:", data);
         router.push("/");
+        router.refresh();
       }
     } catch (error) {
       console.error("로그인 처리 중 예외 발생:", error);
       setServerError("로그인 처리 중 오류가 발생했습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 카카오 로그인 처리 함수
+  const handleKakaoSignIn = async () => {
+    try {
+      setIsLoading(true);
+      setServerError("");
+
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "kakao",
+        options: {
+          redirectTo:
+            "https://pomwxcnjmafwvgdcyrdj.supabase.co/auth/v1/callback",
+        },
+      });
+
+      if (error) {
+        setServerError(error.message);
+        console.error("카카오 로그인 오류:", error);
+      }
+    } catch (error) {
+      console.error("카카오 로그인 처리 중 예외 발생:", error);
+      setServerError("카카오 로그인 처리 중 오류가 발생했습니다.");
     } finally {
       setIsLoading(false);
     }
@@ -83,7 +104,7 @@ export default function SignInForm() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center pt-20 pb-32 px-4 sm:px-6 lg:px-8">
+      <main className="flex-1 flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md">
           <motion.div
             initial="hidden"
@@ -210,27 +231,19 @@ export default function SignInForm() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3">
-                  <Button variant="outline" className="py-6">
+                <div className="flex justify-center">
+                  <Button
+                    variant="outline"
+                    className="py-6 px-10 bg-[#FEE500] hover:bg-[#FDD800] border-[#FEE500] text-[#3A1D1D] font-medium"
+                    onClick={handleKakaoSignIn}
+                    disabled={isLoading}
+                  >
                     <img
-                      src="/placeholder.svg?key=google-icon"
-                      alt="Google"
-                      className="h-5 w-5"
-                    />
-                  </Button>
-                  <Button variant="outline" className="py-6">
-                    <img
-                      src="/placeholder.svg?key=apple-icon"
-                      alt="Apple"
-                      className="h-5 w-5"
-                    />
-                  </Button>
-                  <Button variant="outline" className="py-6">
-                    <img
-                      src="/placeholder.svg?key=kakao-icon"
+                      src="/kakao.png"
                       alt="Kakao"
-                      className="h-5 w-5"
+                      className="h-5 w-5 mr-2"
                     />
+                    카카오로 로그인
                   </Button>
                 </div>
               </div>

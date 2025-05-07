@@ -156,6 +156,32 @@ export default function SignUpForm() {
     }
   };
 
+  // 카카오 로그인 처리 함수
+  const handleKakaoSignIn = async () => {
+    try {
+      setIsLoading(true);
+      setServerError("");
+
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "kakao",
+        options: {
+          redirectTo:
+            "https://pomwxcnjmafwvgdcyrdj.supabase.co/auth/v1/callback",
+        },
+      });
+
+      if (error) {
+        setServerError(error.message);
+        console.error("카카오 로그인 오류:", error);
+      }
+    } catch (error) {
+      console.error("카카오 로그인 처리 중 예외 발생:", error);
+      setServerError("카카오 로그인 처리 중 오류가 발생했습니다.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
@@ -528,27 +554,19 @@ export default function SignUpForm() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3">
-                  <Button variant="outline" className="py-6">
+                <div className="flex justify-center">
+                  <Button
+                    variant="outline"
+                    className="py-6 px-10 bg-[#FEE500] hover:bg-[#FDD800] border-[#FEE500] text-[#3A1D1D] font-medium"
+                    onClick={handleKakaoSignIn}
+                    disabled={isLoading}
+                  >
                     <img
-                      src="/placeholder.svg?key=google-icon"
-                      alt="Google"
-                      className="h-5 w-5"
-                    />
-                  </Button>
-                  <Button variant="outline" className="py-6">
-                    <img
-                      src="/placeholder.svg?key=apple-icon"
-                      alt="Apple"
-                      className="h-5 w-5"
-                    />
-                  </Button>
-                  <Button variant="outline" className="py-6">
-                    <img
-                      src="/placeholder.svg?key=kakao-icon"
+                      src="/kakao.png"
                       alt="Kakao"
-                      className="h-5 w-5"
+                      className="h-5 w-5 mr-2"
                     />
+                    카카오로 시작하기
                   </Button>
                 </div>
               </div>
